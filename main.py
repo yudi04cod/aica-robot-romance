@@ -20,6 +20,10 @@ def main() -> None:
         raise ValueError("line must not be only whitespace")
     if "\n" in LINE:
         raise ValueError("line must be a single line")
+    if LINE != LINE.strip():
+        raise ValueError("line must not start or end with whitespace")
+    if any(ord(ch) < 0x20 for ch in LINE):
+        raise ValueError("line must not contain control characters")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(LINE)
